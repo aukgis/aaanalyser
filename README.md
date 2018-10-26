@@ -6,7 +6,7 @@ A tool for calculating climbing and AAA points for Audax UK events
 Installation
 ------------
 
-Following is based on a clean AWS Ubuntu 16.04 instance.
+The following is based on a clean AWS Ubuntu 16.04 instance.
 
 Web server for static html and WSGI for the DEM server:
 
@@ -25,7 +25,7 @@ sudo add-apt-repository ppa:ubuntugis/ppa && sudo apt-get update
 sudo apt-get install python-gdal
 ```
 
-For installing Javascript dependencies (see below) and building thei
+For installing Javascript dependencies (see below) and building the
 distribution files from source:
 
 ```
