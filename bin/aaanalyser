@@ -1,0 +1,68 @@
+#!/usr/bin/env node
+
+var aaa = require('../js/aaa-base.js');
+
+var AAATrack = require('../js/aaa-track.js');
+
+var program = require('../js/node_modules/commander');
+program
+    .option('-j, --json', 'JSON output')
+    .option('-n, --no-resampling', 'Don\'t resample elevation')
+    .option('-u, --url <url>', 'URL to analyse')
+    .option('-f, --file <file>', 'File to analyse')
+    .parse(process.argv);
+
+
+var Analyse = function () {
+    this.preset = 'GB';
+    this.track = new AAATrack(this);
+    if (program.resampling)
+        this.track.resampleSettings = aaa.PRESETS[this.preset];
+};
+
+Analyse.prototype = {
+    constructor: Analyse,
+
+    displayResults: function() {
+        var data = {};
+        data['warnings'] = this.track.warnings;
+        data['results'] = this.track.stats();
+        if (program.json) {
+            console.log(JSON.stringify(data));
+        } else {
+            if (data['warnings'].length)
+                console.log('Warnings: ' + data['warnings'].join());
+            if (data['results']) {
+                console.log('Results:');
+                for (var i = 0; i < data['results']['fields'].length; i++) {
+                    console.log(' - %s: %s %s', data['results']['fields'][i], data['results']['values'][i], data['results']['units'][i]);
+                }
+            }
+        }
+    }
+}
+
+if (!program.url && !program.file) {
+    program.help();
+} else {
+    var analyse = new Analyse();
+   
+    if (program.file) {
+        //console.log('Loading ' + program.file);
+        var fs = require('fs');
+        var gpx = fs.readFileSync(program.file, 'utf8');
+        analyse.track.loadGPX(gpx);
+        analyse.track.process();
+    } else if (program.url) {
+        var request = require('request');
+        request(program.url, function (error, response, body) {
+            if (error)
+                console.log('error:', error); // Print the error if one occurred
+            //console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+            analyse.track.loadGPX(body);
+            analyse.track.process();
+        });
+    }
+}
+
+

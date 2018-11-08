@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <link rel="stylesheet" href="static/aaa.css?v=CSS_VERSION" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUK AAA Analyser</title>
+</head>
+<body>
+    <script src="static/jquery.min.js"></script>
+    <script src="static/jquery.flot.min.js"></script>
+    <script src="static/jquery.flot.crosshair.min.js"></script>
+    <div id="content">
+        <div id="not-map">
+            <div id="logo"><img src="static/sheila-medium.png"/></div>
+            <div id="title"> 
+                <h1>AUK AAA Analyser</h1>
+                <p>A tool for calculating climbing and AAA points for Audax UK events.</p>
+            </div>
+            <div id="form" style="display: none;">
+                <div id="input">Select GPX to analyse: <input type="file" id="file" accept=".gpx" onChange="document.getElementById('load').disabled = false"/></div>
+                <input type="submit" id="load" value="Load and analyse" onClick="aaaPage.load();" disabled/>
+                <input type="checkbox" id="resample" checked/> Resample <span id="skip-gaps-container"></span>
+                <div id="debug-input" style="display: none">
+                    Sample Length (m):<input id="debug-sample-length" size=3 value="200">
+                    Model:<select id="debug-dem-source"><option selected>OS50_bicubic<option>OS50_bilinear<option>OS50_nearest<option>SRTM1_bicubic<option>SRTM1_bilinear<option>SRTM1_nearest</select>
+                </div>
+            </div>
+            <div id="spinner"></div>
+            <div id="warnings"></div>
+            <div id="stats"></div>
+            <div id="chart"></div>
+        </div>
+        <div id="map"></div>
+    </div>
+    <script src="static/aaa-bundle.js?v=JS_VERSION"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+#!/usr/bin/env nodejs
+
+var aaa = require('../js/aaa-base.js');
+
+// AUKWEB examples + some more intermediates
+var distances = [50, 60, 80, 100, 110, 120, 140, 160, 180, 200, 220, 240, 260, 280, 300, 330, 370, 400, 450, 500, 550, 600, 1000, 1200];
+var climbing = [750, 900, 1200, 1500, 1630, 1760, 2020, 2280, 2540, 2800, 3040, 3280, 3520, 3760, 4000, 0, 0, 5100, 0, 6100, 0, 7000, 11670, 0];
+
+
+for (var i = 0; i < distances.length; i++) {
+    var d = distances[i];
+    var c = climbing[i];
+    var m = aaa.minimumClimbingForDistance(d);
+    var r = aaa.rateForDistance(d);
+   
+    // FIXME: Rubbish padding code
+    var output = '';
+    output += (d < 1000) ? '  ' + d : ' ' + d;
+    output += ' ' + r.toFixed(2);
+    output += ' ' + m.toFixed(0);
+    if (c > 0) {
+        output += ' ' + (c < 1000) ? ' ' + c : c;
+        var delta = m - c;
+        output += ' ' + delta.toFixed(0);
+    }
+    console.log(output);
+}

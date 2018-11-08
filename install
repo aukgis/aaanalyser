@@ -1,0 +1,6 @@
+#browserify --debug js/aaa-main.js | exorcist html/static/aaa-bundle.js.map | uglifyjs -c >  html/static/aaa-bundle.js
+browserify --debug js/aaa-main.js | exorcist html/static/aaa-bundle.js.map  >  html/static/aaa-bundle.js
+# Basic versioning to force reload of code on changes
+JS_VERSION=`md5sum html/static/aaa-bundle.js  | cut -c1-8`
+CSS_VERSION=`md5sum html/static/aaa.css  | cut -c1-8`
+sed s/JS_VERSION/$JS_VERSION/ < html/template.html | sed s/CSS_VERSION/$CSS_VERSION/ > html/index.html
