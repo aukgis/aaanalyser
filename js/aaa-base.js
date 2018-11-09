@@ -3,8 +3,7 @@ var aaa = module.exports = {};
 
 aaa.DEBUG = 1;
 
-aaa.SERVER_BASE_URL = "http://aukgis.frrt.org/dev/dem";
-//aaa.SERVER_BASE_URL = "http://aukgis.frrt.org/dem";
+aaa.SERVER_BASE_URL = "http://aukgis.frrt.org/dem";
 
 // Nominal track bin size, tradeoff between speed and accuracy
 aaa.TRACK_BIN_SIZE = 1.0;
