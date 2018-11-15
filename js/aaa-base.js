@@ -1,7 +1,7 @@
 // Export everything here as psuedo-globals
 var aaa = module.exports = {};
 
-aaa.DEBUG = 1;
+aaa.DEBUG = 0;
 
 aaa.SERVER_BASE_URL = "http://aukgis.frrt.org/dem";
 

@@ -34,7 +34,7 @@ sudo npm install -g uglify-js browserify exorcist
 ```
 
 Get this respository, retrieve node.js dependencies (versions TBC),
-build and install static bundle:
+build and install static bundle and index.html:
 
 ```
 git clone https://github.com/aukgis/aaanalyser
