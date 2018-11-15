@@ -44,13 +44,6 @@ cd ..
 ./install
 ```
 
-FIXME: hack to make the Flot minimised files:
-```
-cd html/static
-uglifyjs -c < flot/jquery.js > jquery.min.js
-uglifyjs -c < flot/jquery.flot.js > jquery.flot.min.js
-uglifyjs -c < flot/jquery.flot.crosshair.js > jquery.flot.crosshair.min.js
-```
 Setup webserver, sample config in `etc/httpd`. For development, can run
 the flask server directly (`server/server.py`) then proxy this through
 apache, as opposed to using WSGI for the production site.
@@ -73,3 +66,4 @@ cd ~/data/dem/srtm1/bil
 ls -1 ../zip/*.zip | xargs -n 1 unzip
 gdalbuildvrt SRTM1.vrt srtm1/bil/*.bil
 ```
+
