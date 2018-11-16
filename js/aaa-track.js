@@ -55,21 +55,21 @@ AAATrack.prototype = {
             this.warnings.push('Invalid GPX');
             return;
         }
-        var g = this.geometry.features[0].geometry;
-        if (g.type == 'LineString') {
-            this.coordinates = g.coordinates;
-        } else if (g.type == 'MultiLineString') {
-            this.coordinates = g.coordinates[0];
-            for (var i = 1; i < g.coordinates.length; i++) {
-                this.coordinates = this.coordinates.concat(g.coordinates[i]);
-            }
-        } else {
-            this.warnings.push('Invalid GPX geometry type: ' + g.type);
-            return;
+        this.coordinates = [];
+        for (var i = 0; i < this.geometry.features.length; i++) {
+            var g = this.geometry.features[i].geometry;
+            if (g.type == 'LineString') {
+                this.coordinates = this.coordinates.concat(g.coordinates);
+            } else if (g.type == 'MultiLineString') {
+                for (var j = 0; j < g.coordinates.length; j++) {
+                    this.coordinates = this.coordinates.concat(g.coordinates[j]);
+                }
+            } 
         }
         // Reduce original geometry to single track
         this.geometry.features[0].geometry.type = 'LineString';
         this.geometry.features[0].geometry.coordinates = this.coordinates;
+        this.geometry.features.length = 1;
     },
 
     sourceCoordinates: function () {
@@ -141,7 +141,6 @@ AAATrack.prototype = {
                 samples.push(curr);
             d += l;
         }
-        //console.log(samples.length, coords.length);
         this.coordinates = active;
         var track = this;
         reqwest({

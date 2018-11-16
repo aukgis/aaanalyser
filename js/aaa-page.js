@@ -56,7 +56,6 @@ AAAPage.prototype = {
                 'source': s.options[s.selectedIndex].text
             };
         }
-        console.log(aaa.PRESETS[this.preset]);
         track.resampleSettings = document.getElementById('resample').checked ? aaa.PRESETS[this.preset] : null;
         track.skipGaps = (document.getElementById('skip-gaps') && document.getElementById('skip-gaps').checked);
         this.track = track;
