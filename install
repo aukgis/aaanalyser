@@ -1,3 +1,4 @@
+PATH=$PATH:~/aaanalyser/js/node_modules/.bin
 #browserify --debug js/aaa-main.js | exorcist html/static/aaa-bundle.js.map | uglifyjs -c >  html/static/aaa-bundle.js
 browserify --debug js/aaa-main.js | exorcist html/static/aaa-bundle.js.map  >  html/static/aaa-bundle.js
 # Basic versioning to force reload of code on changes
