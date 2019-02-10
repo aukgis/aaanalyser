@@ -286,6 +286,12 @@ AAATrack.prototype = {
             s['fields'].push('Min. Climbing Rate');
             s['values'].push(aaa.rateForDistance(this.distance).toFixed(2));
             s['units'].push('m/km');
+            if (this.geometry.features[0].properties.coordTimes) {
+                var times = this.geometry.features[0].properties.coordTimes[0];
+                s['fields'].push('Start Time');
+                s['values'].push(('' + times).split(',')[0]);
+                s['units'].push('');
+            }
         }
         return s;
     },

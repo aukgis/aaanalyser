@@ -1,0 +1,14 @@
+#!/usr/bin/env nodejs
+
+var aaa = require('../js/aaa-base.js');
+
+var start = 100;
+var end = 140;
+
+for (var d = start; d <= end; d++) {
+    var m = aaa.minimumClimbingForDistance(d);
+   
+    var output = 'Distance = ' + d;
+    output += ', min climb = ' + m.toFixed(0);
+    console.log(output);
+}

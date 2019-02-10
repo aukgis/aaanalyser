@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 
-#
-#import site
-#site.addsitedir('/home/aukgis/env/lib/python2.7/site-packages')
+import site
+from os.path import expanduser
+site.addsitedir(expanduser('~/env/lib/python2.7/site-packages'))
 
 from flask import Flask, jsonify, abort, request
 from json import dumps
 import logging, re, socket, time, urllib2
 import dem
+from zipfile import ZipFile
+from StringIO import StringIO
 
 app = Flask(__name__)
 
@@ -47,16 +49,25 @@ def gpx_page():
     result = {'error': ''}
     url = request.args.get('url')
     # Basic URL sanitisation to avoid this becoming an open proxy
-    if not url or not re.search('\.gpx$', url):
+    if not url or not re.search('\.(gpx|zip)$', url):
         result['error'] = 'No/invalid URL specified.'
     else:
         try:
             response = urllib2.urlopen(url)
-        except urllib2.URLError:
+        except urllib2.URLError as e:
             result['error'] = 'Loading %s failed: %s' % (url, e.reason)
             print result['error']
         else:
-            gpx = response.read()
+            if re.search('zip$', url):
+                zipfile = ZipFile(StringIO(response.read()))
+                gpxfilename = zipfile.namelist()[0]
+                if not re.search('gpx$', gpxfilename):
+                    result['error'] = 'Invalid file: %s' % (gpxfilename, )
+                    return jsonify(result)
+                gpx = zipfile.read(gpxfilename)
+                logging.debug(gpx[:100])
+            else:
+                gpx = response.read()
             # Check isn't arbitrarily small, and is XML
             if len(gpx) < 100 or gpx[:5].lower() != '<?xml':
                 result['error'] = 'Invalid GPX.'
@@ -73,6 +84,6 @@ if __name__ == '__main__':
     logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
     app.run(port=9999, debug=True)
 else:
-    logging.basicConfig(format='%(asctime)s %(levelname)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S', filename='/home/aukgis/log/dem_server.log',level=logging.INFO)
+    logging.basicConfig(format='%(asctime)s %(levelname)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S', filename=expanduser('~/log/dem_server.log'), level=logging.INFO)
 
 

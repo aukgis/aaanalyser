@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
 import os, re, struct
+from os.path import expanduser
 from osgeo import ogr, osr, gdal
 from affine import Affine
 from math import floor
 from scipy import interpolate
 from shapely.geometry import Polygon, Point
 
-DEM_DIR = '/home/aukgis/data/dem'
+DEM_DIR = expanduser('~/data/dem')
 # From http://download.geofabrik.de/europe/great-britain.poly - could do better!
 GB_EXTENT = (
 (   9.805678E-01 , 5.059591E+01),

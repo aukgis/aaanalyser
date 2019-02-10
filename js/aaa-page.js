@@ -33,7 +33,8 @@ AAAPage.prototype = {
 	    document.getElementById('input').innerHTML = 'Reading GPX from ' + this.gpxURL;
             document.getElementById('load').disabled = false;
         }
-        aaa.DEBUG = attributes['debug'] ? 1 : 0;
+        if (!aaa.DEBUG)
+            aaa.DEBUG = attributes['debug'] ? 1 : 0;
         if (aaa.DEBUG)
             document.getElementById('debug-input').style.display = 'block';
     },
@@ -89,7 +90,7 @@ AAAPage.prototype = {
 		},
 		error: function (err) {
 		    if (aaa.DEBUG) console.log('Reqwest Error: '+ err);
-		    track.warnings.push('Error retrieving GPX URL.');
+		    track.warnings.push('Error in retrieving GPX URL function.');
 		    track.p.displayResults();
 		}
             });

@@ -1,0 +1,23 @@
+#!/usr/bin/env nodejs
+
+var aaa = require('../js/aaa-base.js');
+
+// AUKWEB examples + some more intermediates
+var distances = [207.7, 201.7];
+var climbing = [2860, 2836];
+
+for (var i = 0; i < distances.length; i++) {
+    var d = distances[i];
+    var c = climbing[i];
+    var m = aaa.minimumClimbingForDistance(d);
+    var r = aaa.rateForDistance(d);
+   
+    // FIXME: Rubbish padding code
+    var output = 'Distance = ' + d;
+    output += ', rate = ' + r.toFixed(2);
+    output += ', min climb = ' + m.toFixed(0);
+    output += ', climb = ' + c;
+    var delta = c - m;
+    output += ', delta = ' + delta.toFixed(0);
+    console.log(output);
+}
