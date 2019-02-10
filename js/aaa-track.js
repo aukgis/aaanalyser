@@ -1,6 +1,6 @@
 var reqwest = require('reqwest');
 var simplify = require('simplify-js');
-var toGeoJSON = require('togeojson');
+var toGeoJSON = require('@mapbox/togeojson');
 var DOMParser = require('xmldom').DOMParser;
 
 var aaa = require('./aaa-base.js');

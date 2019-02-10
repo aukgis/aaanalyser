@@ -25,21 +25,15 @@ sudo add-apt-repository ppa:ubuntugis/ppa && sudo apt-get update
 sudo apt-get install python-gdal gdal-bin python-shapely
 ```
 
-For installing Javascript dependencies (see below) and building the
-distribution files from source:
-
-```
-sudo apt-get install npm nodejs-legacy
-sudo npm install -g uglify-js browserify exorcist
-```
-
-Get this respository, retrieve node.js dependencies (versions TBC),
-build and install static bundle and index.html:
+Get this respository, retrieve node.js dependencies (versions that worked
+in testing, YMMV), build and install static bundle and index.html:
 
 ```
 git clone https://github.com/aukgis/aaanalyser
 cd aaanalyser/js
-npm install reqwest simplify-js @mapbox/togeojson xmldom leaflet
+npm install reqwest@2.0.5 simplify-js@1.2.3 @mapbox/togeojson@0.16.0 xmldom@0.1.27 leaflet@1.4.0 brfs@1.4.3 browserify@16.2.3 uglify-js@3.4.9 exorcist@1.0.1
+# Avoid having to install nodejs-legacy at the system level
+ln -s /usr/bin/nodejs node_modules/.bin/node
 cd ..
 ./install
 ```
