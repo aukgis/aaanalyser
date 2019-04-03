@@ -2,6 +2,7 @@ var reqwest = require('reqwest');
 var simplify = require('simplify-js');
 var toGeoJSON = require('@mapbox/togeojson');
 var DOMParser = require('xmldom').DOMParser;
+var tcxParser = require('tcx');
 
 var aaa = require('./aaa-base.js');
 
@@ -52,7 +53,10 @@ AAATrack.prototype = {
         var dom = (new DOMParser()).parseFromString(text, 'text/xml');
         this.geometry = toGeoJSON.gpx(dom);
         if (this.geometry.features.length == 0) {
-            this.warnings.push('Invalid GPX');
+            this.geometry = tcxParser(dom);
+        }
+        if (this.geometry.features.length == 0) {
+            this.warnings.push('Invalid Track');
             return;
         }
         this.coordinates = [];
