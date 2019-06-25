@@ -1,0 +1,17 @@
+#!/usr/bin/env nodejs
+
+// Given climbing, print points
+
+
+var aaa = require('../js/aaa-base.js');
+
+climbing = process.argv.slice(2);
+
+for (var i = 0; i < climbing.length; i++) {
+    var c = climbing[i];
+    var p = aaa.pointsForClimbing(c);
+   
+    var output = 'Climbing = ' + c;
+    output += ', points = ' + p;
+    console.log(output);
+}
