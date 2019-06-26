@@ -132,8 +132,26 @@ def extract_points_from_raster(points, filename, interp=None):
         elevations.append(result)
     return elevations
 
+# http://pcjericks.github.io/py-gdalogr-cookbook/gdal_general.html#install-gdal-ogr-error-handler
+def gdal_error_handler(err_class, err_num, err_msg):
+    errtype = {
+            gdal.CE_None:'None',
+            gdal.CE_Debug:'Debug',
+            gdal.CE_Warning:'Warning',
+            gdal.CE_Failure:'Failure',
+            gdal.CE_Fatal:'Fatal'
+    }
+    err_msg = err_msg.replace('\n',' ')
+    err_class = errtype.get(err_class, 'None')
+#    print 'Error Number: %s' % (err_num)
+#    print 'Error Type: %s' % (err_class)
+    print 'Error Message: %s' % (err_msg)
+
 if __name__ == "__main__":
     #gdallocationinfo -xml -wgs84 ~/data/dem/OS50.vrt -4.075 53.068
+
+    # install error handler
+    gdal.PushErrorHandler(gdal_error_handler)
 
     print elevations([[-4.075, 53.068]])
     print elevations([[-4.075, 53.068]], 'OS50_bilinear')
