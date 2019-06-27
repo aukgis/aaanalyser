@@ -10,14 +10,25 @@ program
     .option('-n, --no-resampling', 'Don\'t resample elevation')
     .option('-u, --url <url>', 'URL to analyse')
     .option('-f, --file <file>', 'File to analyse')
+    .option('-l, --length <length>', 'Custom sample length')
+    .option('-s, --source <source>', 'Custom sample source')
     .parse(process.argv);
 
 
 var Analyse = function () {
     this.preset = 'GB';
     this.track = new AAATrack(this);
-    if (program.resampling)
+    if (program.resampling) {
         this.track.resampleSettings = aaa.PRESETS[this.preset];
+	if (program.length) {
+	    this.track.resampleSettings['length'] = program.length;
+            this.track.resampleSettings['name'] = 'Custom';
+	}
+        if (program.source) {
+	    this.track.resampleSettings['source'] = program.source;
+            this.track.resampleSettings['name'] = 'Custom';
+	}
+    }
 };
 
 Analyse.prototype = {
