@@ -1,0 +1,12 @@
+[Unit]
+Description=AUKGIS gunicorn daemon
+After=network.target
+
+[Service]
+User=aukgis
+Group=aukgis
+WorkingDirectory=/home/aukgis/aaanalyser/server
+ExecStart=/home/aukgis/env/bin/gunicorn --workers 3 --bind 127.0.0.1:8889 wsgi
+
+[Install]
+WantedBy=multi-user.target

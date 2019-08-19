@@ -8,10 +8,10 @@ Installation
 
 The following is based on a clean AWS Ubuntu 16.04 instance.
 
-Web server for static html and WSGI for the DEM server:
+Web server (earlier versions used apache2):
 
 ```
-sudo apt-get install apache2 libapache2-mod-wsgi
+sudo apt-get install nginx
 ```
 
 Various python dependencies for the DEM server, including the GIS
@@ -67,7 +67,7 @@ Setup up Python environment:
 virtualenv --python=python2.7 ~/env
 source ~/env/bin/activate
 pip install --upgrade pip
-pip install scipy Affine shapely flask
+pip install scipy Affine shapely flask gunicorn
 ```
 
 Install GDAL from source:
@@ -86,5 +86,6 @@ ldconfig
 ```
 
 Use nginx for the main server (see `etc/nginx_aukgis.conf`),
-with apache's mod_wsgi for the dem server (`etc/httpd_aukgis.conf`).
+with Green Unicorn for the dem server (`etc/aukgis_gunicorn.service` - 
+this is a CentOS 7 systemd script, needs Ubuntu equivalent).
 

@@ -11,23 +11,23 @@ import dem
 from zipfile import ZipFile
 from StringIO import StringIO
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 def get_ip_address():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(("8.8.8.8", 80))
     return s.getsockname()[0]
 
-@app.route('/')
+@application.route('/')
 def index_page():
     return 'AUKGIS DEM server running.\n'
 
-@app.route('/status')
+@application.route('/status')
 def status_page():
     status = 'Connecting via %s\n' % get_ip_address()
     return status
 
-@app.route('/elevations', methods=['POST'])
+@application.route('/elevations', methods=['POST'])
 def elevations_page():
     result = {'errors': []}
     start = time.time()
@@ -44,7 +44,7 @@ def elevations_page():
     result['timing'] = time.time() - start
     return jsonify(result)
 
-@app.route('/gpx', methods=['GET'])
+@application.route('/gpx', methods=['GET'])
 def gpx_page():
     result = {'error': ''}
     url = request.args.get('url')
@@ -75,15 +75,15 @@ def gpx_page():
                 result['gpx'] = gpx
     return jsonify(result)
 
-@app.route('/analyse', methods=['GET'])
+@application.route('/analyse', methods=['GET'])
 def analyse_page():
     url = request.args.get('url')
 
 logging.getLogger("requests").setLevel(logging.WARNING)
 if __name__ == '__main__':
     logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
-    app.run(port=9999, debug=True)
+    application.run(port=9999, debug=True)
 else:
-    logging.basicConfig(format='%(asctime)s %(levelname)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S', filename=expanduser('~/log/dem_server.log'), level=logging.INFO)
+    logging.basicConfig(format='%(asctime)s %(levelname)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S', filename='/home/aukgis/log/dem_server.log', level=logging.INFO)
 
 
